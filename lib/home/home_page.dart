@@ -28,12 +28,19 @@ class Home extends StatelessWidget {
               ),
               body: cubit.widgetOpetion[cubit.counter],
               bottomNavigationBar: BottomNavigationBar(
+                selectedItemColor: Colors.black,
+                selectedLabelStyle: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
                 type: BottomNavigationBarType.fixed,
                 items: [
                   BottomNavigationBarItem(
                       icon: Icon(Icons.timer), label: 'Timer'),
                   BottomNavigationBarItem(
-                      icon: Icon(Icons.watch_later), label: 'Watch'),
+                    icon: Icon(Icons.watch_later),
+                    label: 'Watch',
+                  ),
                 ],
                 currentIndex: TimerCubit.get(context).counter,
                 onTap: (int index) {

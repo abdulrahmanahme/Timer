@@ -9,6 +9,7 @@ class TimerCubit extends Cubit<TimerStates> {
   TimerCubit() : super(InitialState());
   static TimerCubit get(context) => BlocProvider.of(context);
   int counter = 0;
+  int currentPage = 0;
   void onItemTapped(int index) {
     counter = index;
     emit(OnItemTapped());
