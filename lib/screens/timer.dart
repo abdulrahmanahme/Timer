@@ -10,6 +10,8 @@ class Timer extends StatefulWidget {
   State<Timer> createState() => _TimerState();
 }
 
+var ODOcontroller = TextEditingController();
+
 class _TimerState extends State<Timer> {
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,30 @@ class _TimerState extends State<Timer> {
               body: SingleChildScrollView(
                 child: Column(
                   children: [
-                    Timer_Widget(),
+                    Center(
+                      child: Container(
+                        height: 500,
+                        width: 500,
+                        child: ListView.builder(
+                            itemCount: cubit.timerList.length,
+                            itemBuilder: (context, index) {
+                              return cubit.timerList[index];
+                            }),
+                      ),
+                    ),
+
+                    ButtonWidget(onClicked: () {
+                      cubit.addTimer();
+                    }),
+
+                    // Button(
+                    //   color: Colors.black,
+                    //   name: 'test',
+                    //   onPressed: () {
+                    //     cubit.addTimer();
+                    //     showMaterialDialog(context);
+                    //   },
+                    // )
                   ],
                 ),
               ),

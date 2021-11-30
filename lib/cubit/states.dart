@@ -2,6 +2,6 @@ abstract class TimerStates {}
 
 class InitialState extends TimerStates {}
 
-class OnItemTapped extends TimerStates {}
+class OnItemTappedStetes extends TimerStates {}
 
-class BottomState extends TimerStates {}
+class AddTimerStetes extends TimerStates {}

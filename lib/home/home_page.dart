@@ -16,17 +16,17 @@ class Home extends StatelessWidget {
               appBar: AppBar(
                 backgroundColor: Colors.white24,
                 elevation: 0,
-                title: const Center(
+                title: Center(
                   child: Text(
-                    'Timer',
+                    cubit.title[cubit.currentIndex],
                     style: TextStyle(
-                        color: Colors.black54,
-                        fontSize: 30,
-                        fontFamily: 'jannah'),
+                      color: Colors.black,
+                      fontSize: 30,
+                    ),
                   ),
                 ),
               ),
-              body: cubit.widgetOpetion[cubit.counter],
+              body: cubit.widgetOpetion[cubit.currentIndex],
               bottomNavigationBar: BottomNavigationBar(
                 selectedItemColor: Colors.black,
                 selectedLabelStyle: TextStyle(
@@ -42,11 +42,20 @@ class Home extends StatelessWidget {
                     label: 'Watch',
                   ),
                 ],
-                currentIndex: TimerCubit.get(context).counter,
+                currentIndex: TimerCubit.get(context).currentIndex,
                 onTap: (int index) {
                   TimerCubit.get(context).onItemTapped(index);
                 },
               ),
+              // floatingActionButton: FloatingActionButton(
+              //   child: Icon(Icons.add),
+              //   backgroundColor: Color(0xff4C68DA),
+              //   onPressed: () {
+              //     cubit.addTimer();
+              //   },
+              // ),
+              // floatingActionButtonLocation:
+              //     FloatingActionButtonLocation.centerDocked,
             );
           }),
     );
