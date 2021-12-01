@@ -3,15 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:timer/widgets/widget.dart';
 
-class CountdownPage extends StatefulWidget {
-  const CountdownPage({Key? key}) : super(key: key);
-
+class AddTimer extends StatefulWidget {
   @override
-  _CountdownPageState createState() => _CountdownPageState();
+  _AddTimerState createState() => _AddTimerState();
 }
 
-class _CountdownPageState extends State<CountdownPage>
-    with TickerProviderStateMixin {
+class _AddTimerState extends State<AddTimer> with TickerProviderStateMixin {
   bool isPlaying = false;
 
   double progress = 1.0;

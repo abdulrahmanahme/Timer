@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:timer/Cubit/cubit.dart';
+import 'package:timer/Cubit/states.dart';
+import 'package:timer/model/model.dart';
 
 class Button extends StatefulWidget {
   String? name;
@@ -39,7 +42,9 @@ class _FilterButtonState extends State<Button> {
   }
 }
 
-Widget timer() {
+Widget timer(
+  Todo todo,
+) {
   final StopWatchTimer _stopWatchTimer = StopWatchTimer();
   final _isHours = true;
   return Column(
@@ -89,6 +94,29 @@ Widget timer() {
                           ),
                         );
                       }),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          todo.title!,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                            fontSize: 22,
+                          ),
+                        ),
+                        if (todo.description.isNotEmpty)
+                          Container(
+                            margin: EdgeInsets.only(top: 4),
+                            child: Text(
+                              todo.description,
+                              style: TextStyle(fontSize: 20, height: 1.5),
+                            ),
+                          )
+                      ],
+                    ),
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
@@ -132,7 +160,7 @@ Widget timer() {
 }
 
 late AnimationController controller;
-
+Todo? todo;
 String get countText {
   Duration count = controller.duration! * controller.value;
   return controller.isDismissed
@@ -140,10 +168,12 @@ String get countText {
       : '${count.inHours}:${(count.inMinutes % 60).toString().padLeft(2, '0')}:${(count.inSeconds % 60).toString().padLeft(2, '0')}';
 }
 
-var controllerAdd = TextEditingController();
-var controllerTitle = TextEditingController();
+var titleController = TextEditingController();
+var descraptionController = TextEditingController();
 
-void draggleSheet({BuildContext? context, Widget? widget}) {
+void draggleSheet({BuildContext? context}) {
+  TimerCubit cubit = TimerCubit.get(context);
+
   showModalBottomSheet(
       backgroundColor: Colors.transparent,
       context: context!,
@@ -197,7 +227,12 @@ void draggleSheet({BuildContext? context, Widget? widget}) {
                                 color: Colors.red,
                               ),
                             ),
-                            onPressed: () {}),
+                            onPressed: () {
+                              cubit.addTimer(
+                                  title: titleController.text,
+                                  description: descraptionController.text);
+                              Navigator.of(context).pop();
+                            }),
                       ],
                     ),
                   ),
@@ -208,7 +243,7 @@ void draggleSheet({BuildContext? context, Widget? widget}) {
                     ),
                   ),
                   defaultFormField(
-                    controller: controllerAdd,
+                    controller: titleController,
                     validate: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter some text';
@@ -227,7 +262,7 @@ void draggleSheet({BuildContext? context, Widget? widget}) {
                     ),
                   ),
                   defaultFormField(
-                    controller: controllerTitle,
+                    controller: descraptionController,
                     validate: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter some text';
@@ -238,10 +273,6 @@ void draggleSheet({BuildContext? context, Widget? widget}) {
                   ),
                   SizedBox(
                     height: 10,
-                  ),
-                  SizedBox(
-                    height: 180,
-                    child: widget,
                   ),
                 ])),
           ));

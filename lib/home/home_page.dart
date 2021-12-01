@@ -18,7 +18,7 @@ class Home extends StatelessWidget {
                 elevation: 0,
                 title: Center(
                   child: Text(
-                    cubit.title[cubit.currentIndex],
+                    cubit.titleTimer[cubit.currentIndex],
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 30,
@@ -47,15 +47,6 @@ class Home extends StatelessWidget {
                   TimerCubit.get(context).onItemTapped(index);
                 },
               ),
-              // floatingActionButton: FloatingActionButton(
-              //   child: Icon(Icons.add),
-              //   backgroundColor: Color(0xff4C68DA),
-              //   onPressed: () {
-              //     cubit.addTimer();
-              //   },
-              // ),
-              // floatingActionButtonLocation:
-              //     FloatingActionButtonLocation.centerDocked,
             );
           }),
     );
