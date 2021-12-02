@@ -4,6 +4,7 @@ import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:timer/Cubit/cubit.dart';
 import 'package:timer/Cubit/states.dart';
 import 'package:timer/Responsive/responsive.dart';
+import 'package:timer/screens/watch.dart';
 import 'package:timer/widgets/widget.dart';
 
 class Timer extends StatefulWidget {
@@ -41,10 +42,8 @@ class _TimerState extends State<Timer> {
                                         padding: const EdgeInsets.all(8.0),
                                         child: Container(
                                           height: displayHeight(context) * .24,
-
-                                          // width: 800,
                                           child: Card(
-                                            shape: const RoundedRectangleBorder(
+                                            shape: RoundedRectangleBorder(
                                                 borderRadius: BorderRadius.only(
                                               topRight: Radius.circular(25),
                                               bottomLeft: Radius.circular(25),
@@ -71,7 +70,7 @@ class _TimerState extends State<Timer> {
                                                                 MainAxisAlignment
                                                                     .start,
                                                             children: [
-                                                              const Text(
+                                                              Text(
                                                                 'Title :',
                                                                 style:
                                                                     TextStyle(
@@ -108,7 +107,7 @@ class _TimerState extends State<Timer> {
                                                           ),
                                                           Row(
                                                             children: [
-                                                              const Text(
+                                                              Text(
                                                                 'Des... :',
                                                                 style:
                                                                     TextStyle(
@@ -145,73 +144,7 @@ class _TimerState extends State<Timer> {
                                                           ),
                                                         ],
                                                       ),
-                                                      StreamBuilder<int?>(
-                                                          stream:
-                                                              _stopWatchTimer
-                                                                  .rawTime,
-                                                          initialData: 2,
-                                                          builder: (context,
-                                                              snapshot) {
-                                                            final value =
-                                                                snapshot.data;
-                                                            final displayTime =
-                                                                StopWatchTimer
-                                                                    .getDisplayTime(
-                                                                        value!,
-                                                                        hours:
-                                                                            _isHours);
-                                                            return Text(
-                                                              displayTime,
-                                                              style: TextStyle(
-                                                                color: Colors
-                                                                    .black54,
-                                                                fontSize: 50,
-                                                              ),
-                                                            );
-                                                          }),
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceAround,
-                                                        children: [
-                                                          Button(
-                                                            name: 'Start',
-                                                            color: Colors.green,
-                                                            onPressed: () {
-                                                              _stopWatchTimer
-                                                                  .onExecute
-                                                                  .add(StopWatchExecute
-                                                                      .start);
-                                                            },
-                                                          ),
-                                                          SizedBox(
-                                                            width: 13,
-                                                          ),
-                                                          Button(
-                                                            name: 'Reset',
-                                                            color: Colors.black,
-                                                            onPressed: () {
-                                                              _stopWatchTimer
-                                                                  .onExecute
-                                                                  .add(StopWatchExecute
-                                                                      .reset);
-                                                            },
-                                                          ),
-                                                          SizedBox(
-                                                            width: 13,
-                                                          ),
-                                                          Button(
-                                                            name: 'Stop',
-                                                            color: Colors.red,
-                                                            onPressed: () {
-                                                              _stopWatchTimer
-                                                                  .onExecute
-                                                                  .add(StopWatchExecute
-                                                                      .stop);
-                                                            },
-                                                          ),
-                                                        ],
-                                                      ),
+                                                      buildTimer()
                                                     ],
                                                   ),
                                                 ]),
@@ -223,11 +156,9 @@ class _TimerState extends State<Timer> {
                                 })
                             : Center(
                                 child: Text(
-                                  'NO Timer To Add',
+                                  'Add a STOPWATCH ',
                                   style: TextStyle(
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black54,
+                                    fontSize: 30,
                                   ),
                                 ),
                               ),
@@ -235,6 +166,8 @@ class _TimerState extends State<Timer> {
                     ),
                     ButtonWidget(onClicked: () {
                       draggleSheet(context: context);
+                      titleController.clear();
+                      descraptionController.clear();
                     }),
                   ],
                 ),

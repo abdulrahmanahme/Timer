@@ -42,123 +42,6 @@ class _FilterButtonState extends State<Button> {
   }
 }
 
-Widget timer(
-  Todo todo,
-) {
-  final StopWatchTimer _stopWatchTimer = StopWatchTimer();
-  final _isHours = true;
-  return Column(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-      SizedBox(
-        height: 10,
-      ),
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          height: 150,
-          child: Card(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-              topRight: Radius.circular(25),
-              bottomLeft: Radius.circular(25),
-              bottomRight: Radius.circular(25),
-              topLeft: Radius.circular(25),
-            )),
-            elevation: 8,
-            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'd',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.red,
-                    ),
-                  ),
-                  StreamBuilder<int?>(
-                      stream: _stopWatchTimer.rawTime,
-                      initialData: 2,
-                      builder: (context, snapshot) {
-                        final value = snapshot.data;
-                        final displayTime = StopWatchTimer.getDisplayTime(
-                            value!,
-                            hours: _isHours);
-                        return Text(
-                          displayTime,
-                          style: TextStyle(
-                            color: Colors.black54,
-                            fontSize: 50,
-                          ),
-                        );
-                      }),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          todo.title!,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            fontSize: 22,
-                          ),
-                        ),
-                        if (todo.description.isNotEmpty)
-                          Container(
-                            margin: EdgeInsets.only(top: 4),
-                            child: Text(
-                              todo.description,
-                              style: TextStyle(fontSize: 20, height: 1.5),
-                            ),
-                          )
-                      ],
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Button(
-                        name: 'Start',
-                        color: Colors.green,
-                        onPressed: () {
-                          _stopWatchTimer.onExecute.add(StopWatchExecute.start);
-                        },
-                      ),
-                      SizedBox(
-                        width: 13,
-                      ),
-                      Button(
-                        name: 'Reset',
-                        color: Colors.black,
-                        onPressed: () {
-                          _stopWatchTimer.onExecute.add(StopWatchExecute.reset);
-                        },
-                      ),
-                      SizedBox(
-                        width: 13,
-                      ),
-                      Button(
-                        name: 'Stop',
-                        color: Colors.red,
-                        onPressed: () {
-                          _stopWatchTimer.onExecute.add(StopWatchExecute.stop);
-                        },
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ]),
-          ),
-        ),
-      )
-    ],
-  );
-}
-
 late AnimationController controller;
 Todo? todo;
 String get countText {
@@ -300,6 +183,62 @@ class RoundButton extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget buildTimer() {
+  final StopWatchTimer _stopWatchTimer = StopWatchTimer();
+  final _isHours = true;
+  return Column(
+    children: [
+      StreamBuilder<int?>(
+          stream: _stopWatchTimer.rawTime,
+          initialData: 2,
+          builder: (context, snapshot) {
+            final value = snapshot.data;
+            final displayTime =
+                StopWatchTimer.getDisplayTime(value!, hours: _isHours);
+            return Text(
+              displayTime,
+              style: TextStyle(
+                color: Colors.black54,
+                fontSize: 50,
+              ),
+            );
+          }),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Button(
+            name: 'Start',
+            color: Colors.green,
+            onPressed: () {
+              _stopWatchTimer.onExecute.add(StopWatchExecute.start);
+            },
+          ),
+          SizedBox(
+            width: 13,
+          ),
+          Button(
+            name: 'Reset',
+            color: Colors.black,
+            onPressed: () {
+              _stopWatchTimer.onExecute.add(StopWatchExecute.reset);
+            },
+          ),
+          SizedBox(
+            width: 13,
+          ),
+          Button(
+            name: 'Stop',
+            color: Colors.red,
+            onPressed: () {
+              _stopWatchTimer.onExecute.add(StopWatchExecute.stop);
+            },
+          ),
+        ],
+      ),
+    ],
+  );
 }
 
 Widget defaultFormField({
